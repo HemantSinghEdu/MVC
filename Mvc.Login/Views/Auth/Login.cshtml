@@ -1,0 +1,14 @@
+﻿@model Mvc.Login.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@Html.ValidationSummary(true)
+
+@using(Html.BeginForm())
+{
+    @Html.EditorForModel()      //will layout the html controls for all properties in the model
+    <p><button type="submit">Log In</button></p>
+}
