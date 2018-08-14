@@ -1,0 +1,111 @@
+Topic	S.No	Question
+MVC		
+	1	What is MVC?
+	2	Why MVC? 
+	3	Where do we mention the routes?
+	4	Can we specify routes other than in RoutesConfig?
+	5	What are filters?
+	6	Where do we mention the filters?
+	7	Can we have custom filters?
+	8	What is Owin? (Open Web interface for .NET)
+	9	What is Global.asax
+	10	What is AuthorizeAttribute
+	11	What is AllowAnonymous attribute?
+	12	Models vs ViewModels
+	13	Can we specify validations on models?
+	14	What are the return types of Actions?
+	15	We want a common UI to be shown on all pages? What should we do?
+	16	Where is the ViewStart view
+	17	Viewbag vs ViewData
+	18	ViewData vs TempData
+	19	Strongly typed view vs dynamic view
+	20	Can we write C# code in a view?
+	21	Can we write HTML in a view?
+	22	Can we write Js in a view?
+		
+EF		
+	1	What is Entity Framework
+	2	What are the two approaches in EF to work with the database?
+	3	Are changes to db automatically updated in EF?
+		
+Api		
+	1	How do we create api in MVC?
+	2	What is WCF?
+	3	What is WebApi
+	4	WCF vs WebApi
+		
+C#		
+	1	Interface vs Class
+	2	Interface vs Abstract class
+	3	Static class
+	4	Can we instantiate an interface
+	5	Can we instantiate an abstract class
+	6	Why do we use interfaces?
+	7	Overriding and how to do it?
+	8	Sealed class, sealed function
+	9	Default access modifier of class
+	10	Default access modifier of class members
+	11	Dependency injection
+	12	Pass a function X as parameter to another function Y, and call X inside Y. How?
+	13	What are delegates?
+	14	What are events?
+	15	Types of delegates - Func/Action/Events
+	16	What is LINQ?  - Language integrated query
+	17	Can a class have private constructor?
+	18	Can a class have both private and public constructor?
+	19	Which is faster, if-else or switch?
+	20	Can we convert all if-else statements to switch?
+		
+Patterns		
+	1	What are design patterns
+	2	What is singleton pattern?
+	3	Singleton class vs Static class?
+	4	What is factory pattern?
+		
+JS		
+	1	What is ajax?
+	2	What is json?
+	3	What is css?
+	4	How do we pass function as a parameter to another function?
+	5	What is unobtrusive Js?
+	6	Where is js executed?
+	7	put a breakpoint in js?
+	8	add logs in js?
+	9	define a function in js?
+	10	define a json object in js?
+	11	Is Js strongly typed or weakly typed language?
+	12	  == vs === 
+	13	"123" == 123  vs "123"===123
+	14	Normal js vs min js
+		
+Unit Testing		
+	1	How do you do unit testing
+	2	
+		
+		
+		
+Memory Mgmt		
+	1	Explain garbage collection in .NET
+	2	
+		
+		
+		
+		
+		
+		
+		
+SQL		
+	1	what is an index?
+	2	Clustered vs Non-clustered indexes?
+	3	How would you write an insert script that prevents multiple inserts by accidents?
+	4	How would you create a stored proc so that if it already exists, it is overwritten without giving error?
+		
+SVN		
+	1	Which tool do you use for version control?
+	2	Do you follow agile? Which tool do you use?
+		
+GK		
+	1	Latest C# version?  - 7.2
+	2	Latest Visual Studio? - VS 2017 v15.5
+	3	Latest .NET version - 4.7.2
+	4	What is ASP.NET Core
