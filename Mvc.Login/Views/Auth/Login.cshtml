@@ -1,4 +1,4 @@
-﻿@model Mvc.Login.ViewModels.LoginViewModel
+﻿@model Mvc.Login.ViewModels.UserViewModel
 @{
     ViewBag.Title = "Login";
 }
@@ -9,6 +9,10 @@
 
 @using(Html.BeginForm())
 {
-    @Html.EditorForModel()      //will layout the html controls for all properties in the model
+    @Html.LabelFor(user => user.Email) <br/>
+    @Html.TextBoxFor(user => user.Email) <br/>
+    
+    @Html.LabelFor(user => user.Password) <br/>
+    @Html.PasswordFor(user => user.Password)<br/>
     <p><button type="submit">Log In</button></p>
 }

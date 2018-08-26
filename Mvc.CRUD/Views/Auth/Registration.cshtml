@@ -1,0 +1,25 @@
+﻿@model Mvc.CRUD.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Registration";
+}
+
+<h2>Registration</h2>
+
+@Html.ValidationSummary(false)
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(user => user.Email) <br/>
+    @Html.TextBoxFor(user => user.Email) <br/>
+    
+    @Html.LabelFor(user => user.Password) <br/>
+    @Html.PasswordFor(user => user.Password) <br/>
+    
+    @Html.LabelFor(user => user.Name) <br/>
+    @Html.TextBoxFor(user => user.Name) <br/>
+    
+    @Html.LabelFor(user => user.Country) <br/>
+    @Html.TextBoxFor(user => user.Country) <br/>
+    
+    <p><button type="submit">Register</button></p>
+}

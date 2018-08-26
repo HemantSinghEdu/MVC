@@ -1,4 +1,6 @@
-﻿using Mvc.Login.ViewModels;
+﻿using Mvc.Login.Models;
+using Mvc.Login.Utility;
+using Mvc.Login.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace Mvc.Login.Controllers
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
-            var model = new LoginViewModel
+            var model = new UserViewModel
             {
                 ReturnUrl = returnUrl
             };
@@ -24,31 +26,41 @@ namespace Mvc.Login.Controllers
 
         //POST: Auth - will be called when user clicks submit button on login page
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login(UserViewModel model)
         {
             if (!ModelState.IsValid) //checks if input fields have the correct format and are valid
             {
                 //if not, then return the same login view, with the inputs as is, so user doesn't have to retype them
                 return View(model);
             }
-            //For now, we will authenticate hard-coded credentials
-            if (model.Email == "admin@admin.com" && model.Password == "12345")
+
+            using (var context = new MvcDbContext())
             {
-                //create a list of claims
-                List<Claim> claims = new List<Claim>{
-                    new Claim(ClaimTypes.Name, "John"),
-                    new Claim(ClaimTypes.Email, "john.doe@email.com"),
-                    new Claim(ClaimTypes.Country, "Australia")
-                };
-                //create a claims identity based on above claims, and instruct it to use cookie
-                var identity = new ClaimsIdentity(claims, "ApplicationCookie");
+                var user = model.Email!=null? context.Users.FirstOrDefault(u => u.Email == model.Email):null;
+                if (user != null)
+                {
+                    var email = user.Email;
+                    var password = user.Password;
+                    var decryptedPassword = CustomDecrypt.Decrypt(password);
+                    if (model.Email == email && model.Password == decryptedPassword)
+                    {
+                        //create a list of claims
+                        List<Claim> claims = new List<Claim>{
+                            new Claim(ClaimTypes.Name, user.Name),
+                            new Claim(ClaimTypes.Email, user.Email),
+                            new Claim(ClaimTypes.Country, user.Country)
+                        };
+                        //create a claims identity based on above claims, and instruct it to use cookie
+                        var identity = new ClaimsIdentity(claims, "ApplicationCookie");
 
-                var owinContext = Request.GetOwinContext();
-                var authManager = owinContext.Authentication; //gets the authentication middleware functionality available on the current context
-                authManager.SignIn(identity);
+                        var owinContext = Request.GetOwinContext();
+                        var authManager = owinContext.Authentication; //gets the authentication middleware functionality available on the current context
+                        authManager.SignIn(identity);
 
-                string redirectUrl = GetRedirectUrl(model.ReturnUrl);
-                return Redirect(redirectUrl);
+                        string redirectUrl = GetRedirectUrl(model.ReturnUrl);
+                        return Redirect(redirectUrl);
+                    }
+                }
             }
             return View(model); //if email/psw entered by user is not correct, show the loginpage again
         }
@@ -70,6 +82,44 @@ namespace Mvc.Login.Controllers
             var authManager = owinContext.Authentication;
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");
+        }
+
+        /// <summary>
+        /// When user hits the registration page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Registration()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// When user submits registration
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Registration(UserViewModel uservm)
+        {
+            if (ModelState.IsValid)
+            {
+                var encryptedPassword = CustomEncrypt.Encrypt(uservm.Password);
+                using (var context = new MvcDbContext())
+                {
+                    var user = context.Users.Create();
+                    user.Email = uservm.Email;
+                    user.Password = encryptedPassword;
+                    user.Country = uservm.Country;
+                    user.Name = uservm.Name;
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "One or more fields are invalid");
+            }
+            return View();
         }
     }
 }

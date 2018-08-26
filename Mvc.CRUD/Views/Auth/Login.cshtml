@@ -1,0 +1,20 @@
+﻿@model Mvc.CRUD.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<h2>Login</h2>
+<p>@Html.ActionLink("Click here to view public list", "Index")</p>
+
+@Html.ValidationSummary(false)
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(user => user.Email) <br/>
+    @Html.TextBoxFor(user => user.Email) <br/>
+    @Html.LabelFor(user => user.Password)<br/>
+    @Html.PasswordFor(user => user.Password)<br/>
+    <button type="submit">Log In</button>
+}
+
